@@ -1,0 +1,4 @@
+.idea/
+myenv/
+dbService/.env
+__pycache__/
