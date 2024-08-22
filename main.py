@@ -1,45 +1,59 @@
 from menuFunction.MenuFunctions import MenuFunction
 
-menu = {
-    1: "1 -> Exit",
-    2: "2 -> Search films by keyword",
-    3: "3 -> Search films by genre and release year",
-    4: "4 -> See top 10 queries"
-}
+from flask import Flask, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+write_connector, read_connector = MenuFunction.init_app()
+
+
+@app.route("/byKeyWord/<word>")
+def get_by_keyword(word):
+
+    temp_result = MenuFunction.get_film_by_keyword(
+        write_connector, read_connector, word)
+
+    if not temp_result:
+        return {}
+
+    result = list(map(lambda x: x .to_json(), temp_result))
+
+    return jsonify({"result": result})
+
+
+@app.route("/genres")
+def get_genres():
+    result = MenuFunction.get_genres(read_connector)
+    return jsonify({"result": result})
+
+
+@app.route("/byGenreAndYear/<genre>/<year>")
+def get_by_genre_and_year(genre, year):
+
+    temp_result = MenuFunction.get_film_by_genre_and_release_year(
+        write_connector, read_connector, genre, year)
+
+    if not temp_result:
+        return {}
+
+    result = list(map(lambda x: x.to_json(), temp_result))
+
+    return jsonify({"result": result})
+
+
+@app.route("/topTenQuery")
+def get_top_ten_query():
+    temp_result = MenuFunction.get_top_search_query(write_connector)
+
+    if not temp_result:
+        return {}
+
+    result = list(map(lambda x: x.to_json(), temp_result))
+
+    return jsonify({"result": result})
+
 
 if __name__ == "__main__":
-
-    write_connector, read_connector = MenuFunction.init_app()
-
-    menu_num = 0
-
-    while True:
-        for text in menu.values():
-            print(text)
-
-        menu_num = int(input("Enter a menu number: "))
-
-        while menu_num > 4:
-            print(f"Invalid number ({menu_num}), please enter the number from 1 to 4")
-            menu_num = int(input("Enter a menu number: "))
-
-        if menu_num == 1:
-            MenuFunction.close_app(write_connector, read_connector)
-            break
-
-        elif menu_num == 2:
-            while True:
-                result = MenuFunction.get_film_by_keyword(write_connector, read_connector)
-                if not result:
-                    menu_num = 0
-                    break
-
-        elif menu_num == 3:
-            while True:
-                result = MenuFunction.get_film_by_genre_and_release_year(write_connector, read_connector)
-                if not result:
-                    menu_num = 0
-                    break
-
-        else:
-            MenuFunction.get_top_search_query(write_connector)
+    app.run(debug=True)
