@@ -1,10 +1,9 @@
 class SearchHistory:
     def __init__(self, date):
-        self.id = date[0]
-        self.query = date[1]
+        self.id, self.query = date
 
     def __str__(self):
-        return f"{self.query}"
+        return f"Query: {self.query}"
 
     def to_json(self):
         return {

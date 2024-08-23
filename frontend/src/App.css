@@ -1,5 +1,8 @@
 .App {
     text-align: center;
+    margin: auto;
+    margin-bottom: 100px;
+    width: 900px;
 }
 
 .active {
@@ -24,6 +27,7 @@ a {
 nav {
     background-color: darkslategray;
     padding: 5px;
+    border-radius: 10px;
 }
 
 nav a {
@@ -36,6 +40,12 @@ h1 {
     margin-bottom: 40px;
 }
 
+h2 {
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 button {
     padding: 15px;
     font-size: 30px;
@@ -43,11 +53,4 @@ button {
     border: 0;
     margin: 20px;
     cursor: pointer;
-}
-
-p {
-    max-width: 950px;
-    margin: auto;
-    color: lightblue;
-    font-size: 35px;
 }
