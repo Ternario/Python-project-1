@@ -1,4 +1,4 @@
-from module.Film import Film, FilmByReleaseYear
+from module.Film import Film
 
 
 class SakilaService:
@@ -7,14 +7,14 @@ class SakilaService:
     def gte_film_by_keyword(db, word):
         db.cursor.execute(
             """
-            SELECT title
+            SELECT film_id, title,release_year, description
             FROM film 
             WHERE title LIKE %s 
             LIMIT 10
             """, ("%" + word + "%",)
         )
 
-        return [Film(title[0]) for title in db.cursor.fetchall()]
+        return [Film(date) for date in db.cursor.fetchall()]
 
     @staticmethod
     def get_genres(db):
@@ -26,7 +26,7 @@ class SakilaService:
     def get_film_by_genre_and_release_year(db, genre, year):
         db.cursor.execute(
             """
-            SELECT f.title, f.release_year
+            SELECT f.film_id, f.title, f.release_year, f.description
             FROM film AS f
             JOIN film_category AS fc
             on f.film_id = fc.film_id
@@ -37,4 +37,4 @@ class SakilaService:
             """, (genre, year)
         )
 
-        return [FilmByReleaseYear(date) for date in db.cursor.fetchall()]
+        return [Film(date) for date in db.cursor.fetchall()]
