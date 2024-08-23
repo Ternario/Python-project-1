@@ -55,6 +55,29 @@ class MenuFunction:
         return result
 
     @staticmethod
+    def get_actors(write_connector, read_connector, name):
+        result = SakilaService.get_actor(read_connector, name)
+
+        if not result:
+            return
+
+        SearchHistoryService.is_exist_query(write_connector, name)
+
+        return result
+
+    @staticmethod
+    def get_films_by_actor(write_connector, read_connector, name):
+
+        result = SakilaService.get_films_by_actor(read_connector, name)
+
+        if not result:
+            return
+
+        SearchHistoryService.is_exist_query(write_connector, name)
+
+        return result
+
+    @staticmethod
     def close_app(write_connector, read_connector):
         write_connector.close_connect()
         read_connector.close_connect()
