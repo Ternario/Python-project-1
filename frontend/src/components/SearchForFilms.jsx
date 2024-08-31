@@ -1,38 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./SearchForFilms.module.css";
 import Form from "./Form/Form";
 import { PATH } from "../service";
 
 function SearchForFilm() {
-    const [isRun, setIsRun] = useState(false);
     const [result, setResult] = useState("");
     const [requested, setRequested] = useState(false);
     const [isActor, setIsActor] = useState(false);
     const [actorName, setActorName] = useState("");
 
-    useEffect(() => {
-        fetchRunApp();
-    }, []);
-
-    const fetchRunApp = async () => {
-        const response = await fetch(`${PATH}`);
-        const data = await response.json();
-        const isOpen = data.result;
-
-        if (isOpen[0].end === true) {
-            setIsRun(true);
-            alert("The connection was successful.");
-        }
-    };
-
     const fetchFilmsByKeyword = async (path, query) => {
-        if (!isRun) {
-            alert("Connection is closed, you have to open it again");
-            return;
-        }
-
         const response = await fetch(`${PATH}${path}/${query}`);
         const data = await response.json();
+        console.log(data);
         setResult(data.result);
 
         if (actorName) {
@@ -49,11 +29,6 @@ function SearchForFilm() {
     };
 
     const fetchFilmsByGenreAndYear = async (path, genre, year) => {
-        if (!isRun) {
-            alert("Connection is closed, you have to open it again");
-            return;
-        }
-
         const response = await fetch(`${PATH}${path}/${genre}/${year}`);
         const data = await response.json();
         setResult(data.result);
@@ -72,11 +47,6 @@ function SearchForFilm() {
     };
 
     const fetchActors = async (path, name) => {
-        if (!isRun) {
-            alert("Connection is closed, you have to open it again");
-            return;
-        }
-
         const response = await fetch(`${PATH}${path}/${name}`);
         const data = await response.json();
         setResult(data.result);
@@ -95,11 +65,6 @@ function SearchForFilm() {
     };
 
     const fetchFilmsByActors = async (path, name) => {
-        if (!isRun) {
-            alert("Connection is closed, you have to open it again");
-            return;
-        }
-
         const response = await fetch(`${PATH}${path}/${name}`);
         const data = await response.json();
         setResult(data.result);
@@ -118,11 +83,6 @@ function SearchForFilm() {
     };
 
     const fetchTopQuery = async (path) => {
-        if (!isRun) {
-            alert("Connection is closed, you have to open it again");
-            return;
-        }
-
         const response = await fetch(`${PATH}${path}`);
         const data = await response.json();
         setResult(data.result);
@@ -137,17 +97,6 @@ function SearchForFilm() {
 
         if (isActor) {
             setIsActor(false);
-        }
-    };
-
-    const closeConnection = async () => {
-        const response = await fetch(`${PATH}close`);
-        const data = await response.json();
-        const isClosed = data.result;
-
-        if (isClosed[0].end === true) {
-            setIsRun(false);
-            alert("Connection closed.");
         }
     };
 
@@ -183,13 +132,13 @@ function SearchForFilm() {
 
     const info = !requested ? <h2>Let's start!</h2> : <h2>Unfortunately nothing found {"=("}</h2>;
 
-    const items = !result ? info : renderItems(isActor, result);
+    const items = Object.keys(result).length === 0 ? info : renderItems(isActor, result);
 
     const name = !actorName ? undefined : <h2>{actorName}</h2>;
 
     return (
         <>
-            <Form isRun={isRun} fetchRunApp={fetchRunApp} setRequested={setRequested} setResult={setResult} setActorName={setActorName} fetchByKeyword={fetchFilmsByKeyword} fetchByGenreAndYear={fetchFilmsByGenreAndYear} fetchActors={fetchActors} fetchFilmsByActors={fetchFilmsByActors} fetchTopQuery={fetchTopQuery} closeConnection={closeConnection} />
+            <Form setRequested={setRequested} setResult={setResult} setActorName={setActorName} fetchByKeyword={fetchFilmsByKeyword} fetchByGenreAndYear={fetchFilmsByGenreAndYear} fetchActors={fetchActors} fetchFilmsByActors={fetchFilmsByActors} fetchTopQuery={fetchTopQuery} />
             {name}
             <div>{items}</div>
         </>

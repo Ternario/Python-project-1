@@ -1,6 +1,6 @@
 class Actor:
-    def __init__(self, date):
-        self.id, self.first_name, self.last_name = date
+    def __init__(self, data):
+        self.id, self.first_name, self.last_name = data
 
     def __str__(self):
         return f"First name: {self.first_name} Last name: {self.last_name}"

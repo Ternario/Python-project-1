@@ -3,7 +3,7 @@ import styles from "./Form.module.css";
 import Button from "../UI/Button";
 import { PATH } from "../../service";
 
-function Form({ isRun, fetchRunApp, setRequested, setResult, setActorName, fetchByKeyword, fetchByGenreAndYear, fetchActors, fetchFilmsByActors, fetchTopQuery, closeConnection }) {
+function Form({ setRequested, setResult, setActorName, fetchByKeyword, fetchByGenreAndYear, fetchActors, fetchFilmsByActors, fetchTopQuery }) {
     const currentYear = new Date().getFullYear();
     const minYear = 1950;
     const letters = /^[A-Za-z]+$/;
@@ -66,21 +66,16 @@ function Form({ isRun, fetchRunApp, setRequested, setResult, setActorName, fetch
     };
 
     const getGenresList = async () => {
-        if (!isRun) {
-            alert("Connection is closed, you have to open it again");
-            return;
-        }
-
         const response = await fetch(`${PATH}genres`);
         const data = await response.json();
         setGenresList(data);
     };
 
     useEffect(() => {
-        if (radio === "byGenreAndYear" && isRun && !genresList) {
+        if (radio === "byGenreAndYear" && !genresList) {
             getGenresList();
         }
-    }, [radio, isRun]);
+    }, [radio]);
 
     const renderGenresList = (date) => {
         return date.result.map((genre) => {
@@ -147,15 +142,6 @@ function Form({ isRun, fetchRunApp, setRequested, setResult, setActorName, fetch
 
     return (
         <div className={styles.FormContainer}>
-            {!isRun ? (
-                <button className={styles.ConnectionButton} onClick={() => fetchRunApp()}>
-                    Click to make a connection.
-                </button>
-            ) : (
-                <button className={styles.ConnectionButton} onClick={() => closeConnection()}>
-                    Please click here after using to close connection with db.
-                </button>
-            )}
             <form onSubmit={onSubmitHandler}>
                 <div>
                     <h2>Search by:</h2>

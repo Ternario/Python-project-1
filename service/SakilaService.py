@@ -5,7 +5,7 @@ from module.Actor import Actor
 class SakilaService:
 
     @staticmethod
-    def gte_film_by_keyword(db, word):
+    def get_film_by_keyword(db, word):
         db.cursor.execute(
             """
                 SELECT film_id, title,release_year, description
@@ -16,6 +16,14 @@ class SakilaService:
         )
 
         return [Film(date) for date in db.cursor.fetchall()]
+
+    # @staticmethod
+    # def get_film_by_id(db, film_id):
+    #     db.cursor.execute(
+    #         "SELECT film_id, title,release_year, description FROM film WHERE film_id = %s", (film_id,)
+    #     )
+    #
+    #     return Film(db.cursor.fetchall())
 
     @staticmethod
     def get_genres(db):
@@ -36,6 +44,18 @@ class SakilaService:
                 WHERE c.name = %s and f.release_year = %s
                 LIMIT 10
             """, (genre, year)
+        )
+
+        return [Film(date) for date in db.cursor.fetchall()]
+
+    @staticmethod
+    def get_films_from_favorites(db, film_ids):
+        db.cursor.execute(
+            """
+                SELECT film_id, title, release_year, description
+                FROM film
+                WHERE film_id in (%s)
+            """, (film_ids,)
         )
 
         return [Film(date) for date in db.cursor.fetchall()]
