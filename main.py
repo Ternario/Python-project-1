@@ -2,97 +2,68 @@ from dbService.dbconfig import db_config
 from dbService.Connectors import ReadConnector, WriteConnector
 from menuFunction.UsersMenuFunctions import UsersMenuFunctions
 from menuFunction.SearchMenuFunctions import SearchMenuFunction
+from menuFunction.WriteMenuFunctions import WriteMenuFunctions
 
-from flask import Flask,request, jsonify
+from flask import Flask, request
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-
-def init_app():
-    read, write = db_config()
-    r_connector = ReadConnector(read)
-    w_connector = WriteConnector(write)
-
-    return w_connector, r_connector
+read, write = db_config()
 
 
-@app.route("/sign/", methods=["GET", "POST"])
+@app.route("/signUp", methods=["POST"])
 def add_new_user():
-    data = {
-        "email": "do@gm.com",
-        "user_name": "saagfgds",
-        "password": "oasdasddash",
-    }
-
-    return jsonify({"result": UsersMenuFunctions.create_new_user(write_connector, data)})
+    return UsersMenuFunctions.create_new_user(write_connector, request.get_json(force=True))
 
 
-@app.route("/signIn/<data>")
-def get_exist_user(data):
-    data = {
-        "email": "do@gm.com",
-        "password": "oasdasddash",
-    }
-
-    return jsonify({"result": UsersMenuFunctions.get_exist_user(write_connector, data)})
+@app.route("/signIn", methods=["POST"])
+def get_exist_user():
+    return UsersMenuFunctions.get_exist_user(write_connector, request.get_json(force=True))
 
 
-@app.route("/byKeyWord/<word>")
+@app.route("/by_keyword/<word>", methods=["GET"])
 def get_by_keyword(word):
-    return jsonify({"result": SearchMenuFunction.get_film_by_keyword(
-        write_connector, read_connector, word)})
+    return SearchMenuFunction.get_film_by_keyword(write_connector, read_connector, word)
 
 
-@app.route("/genres")
+@app.route("/genres", methods=["GET"])
 def get_genres():
-    return jsonify({"result": SearchMenuFunction.get_genres(read_connector)})
+    return SearchMenuFunction.get_genres(read_connector)
 
 
-@app.route("/byGenreAndYear/<genre>/<year>")
+@app.route("/films_by_genre_and_year/<genre>/<year>", methods=["GET"])
 def get_by_genre_and_year(genre, year):
-    return jsonify({"result": SearchMenuFunction.get_film_by_genre_and_release_year(
-        write_connector, read_connector, genre, year)})
+    return SearchMenuFunction.get_film_by_genre_and_release_year(write_connector, read_connector, genre, year)
 
 
-@app.route("/actors/<name>")
-def get_actors(name):
-    return jsonify({"result": SearchMenuFunction.get_actors(
-        write_connector, read_connector, name)})
+@app.route("/films_or_actor/<category_type>/<name>", methods=["GET"])
+def get_films_or_actors(category_type, name):
+    return SearchMenuFunction.get_actors_or_films_by_actors(write_connector, read_connector, category_type, name)
 
 
-@app.route("/filmActor/<name>")
-def get_films_by_actors(name):
-    return jsonify({"result": SearchMenuFunction.get_films_by_actor(
-        write_connector, read_connector, name)})
-
-
-@app.route("/topTenQuery")
+@app.route("/top_queries", methods=["GET"])
 def get_top_ten_query():
-    return jsonify({"result": SearchMenuFunction.get_top_search_query(write_connector)})
+    return SearchMenuFunction.get_top_search_query(write_connector)
 
 
-@app.route("/addToFavorites/<data>")
-def add_to_favorites(data):
-    pass
-
-
-@app.route("/getFavorites")
+@app.route("/favorites_films", methods=["POST"])
 def get_favorites_list():
-    pass
+    return SearchMenuFunction.get_films_by_id(write_connector, read_connector, request.get_json(force=True))
 
 
-@app.route("/delFromFavorites/<data>")
-def del_from_favorites(data):
-    pass
+@app.route("/manage_list_of_favorites", methods=["POST"])
+def manage_favorites():
+    return WriteMenuFunctions.manage_favorites(write_connector, request.get_json(force=True))
 
 
-def close_connection():
-    write_connector.close_connect()
-    read_connector.close_connect()
+@app.route("/del_all_favorites", methods=["POST"])
+def dell_all_favorites():
+    return WriteMenuFunctions.del_all_favorites(write_connector, request.get_json(force=True))
 
 
 if __name__ == "__main__":
-    write_connector, read_connector = init_app()
+    read_connector = ReadConnector(read)
+    write_connector = WriteConnector(write)
     app.run(debug=True)

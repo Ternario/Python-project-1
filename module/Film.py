@@ -3,7 +3,7 @@ class Film:
         self.id, self.title, self.release_year, self.description = data
 
     def __str__(self):
-        return f"Title: {self.title}, release year: {self.release_year}\nDescription: {self.description}"
+        return f"Id: {self.id}, Title: {self.title}, release year: {self.release_year}\nDescription: {self.description}"
 
     def to_json(self):
         return {

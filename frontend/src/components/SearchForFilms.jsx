@@ -12,7 +12,6 @@ function SearchForFilm() {
     const fetchFilmsByKeyword = async (path, query) => {
         const response = await fetch(`${PATH}${path}/${query}`);
         const data = await response.json();
-        console.log(data);
         setResult(data.result);
 
         if (actorName) {

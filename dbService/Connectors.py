@@ -35,10 +35,10 @@ class WriteConnector(ReadConnector):
         if not table:
             request = """CREATE TABLE users (
                     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                    user_id VARCHAR(10) NOT NULL UNIQUE,
+                    user_id CHAR(12) NOT NULL UNIQUE,
                     user_name VARCHAR(20) NOT NULL UNIQUE CHECK ( LENGTH(user_name) > 0),
                     email VARCHAR(40) NOT NULL UNIQUE CHECK ( LENGTH(email) > 0),
-                    password VARCHAR(40) NOT NULL UNIQUE CHECK ( LENGTH(password) > 0),
+                    password CHAR(66) NOT NULL UNIQUE CHECK ( LENGTH(password) > 0),
                     registration_data DATE NOT NULL );
                 """
             try:
@@ -53,7 +53,7 @@ class WriteConnector(ReadConnector):
         if not table:
             request = """CREATE TABLE users_favorites (
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    user_id VARCHAR(10) NOT NULL,
+                    user_id VARCHAR(12) NOT NULL,
                     film_id INT NOT NULL,
                     FOREIGN KEY (user_id) REFERENCES users(user_id))
                 """

@@ -5,9 +5,9 @@ from argon2 import PasswordHasher
 
 
 class SecureService:
-    argon_hasher = PasswordHasher(
+    _argon_hasher = PasswordHasher(
         time_cost=16, memory_cost=2 ** 15, parallelism=2, hash_len=32, salt_len=16)
-    encoding_parameters = "$argon2id$v=19$m=32768,t=16,p=2$"
+    _encoding_parameters = "$argon2id$v=19$m=32768,t=16,p=2$"
 
     @classmethod
     def hash_password(cls, password):
@@ -17,14 +17,21 @@ class SecureService:
 
         salted_password = user_id + password
 
-        password = cls.argon_hasher.hash(salted_password).split(",")[-1][4:]
+        try:
+            password = cls._argon_hasher.hash(
+                salted_password).split(",")[-1][4:]
 
-        return user_id, password, current_date
+            return user_id, password, current_date
+        except Exception as e:
+            return False
 
     @classmethod
     def password_comparison(cls, user_id, password, user_hash):
         full_password = user_id + password
 
-        full_hash = cls.encoding_parameters + user_hash
+        try:
+            full_hash = cls._encoding_parameters + user_hash
 
-        return cls.argon_hasher.verify(full_hash, full_password)
+            return cls._argon_hasher.verify(full_hash, full_password)
+        except Exception as e:
+            return False
