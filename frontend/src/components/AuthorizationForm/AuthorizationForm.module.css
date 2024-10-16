@@ -1,0 +1,84 @@
+.FormBackground {
+    position: absolute;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1d4d7c;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.FormContainer {
+    position: relative;
+    padding-top: 10px;
+    height: fit-content;
+    width: 600px;
+    border: 4px solid rgb(240, 243, 243);
+    border-radius: 30px;
+    background-color: #112d49;
+}
+
+.Form {
+    padding-bottom: 15px;
+}
+
+.InputWrapper {
+    width: 100%;
+}
+
+.TextInput {
+    margin: 10px 0;
+    width: 75%;
+    height: 30px;
+    font-size: 1.3rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.InfoWrapper {
+    text-align: left;
+    width: 75%;
+    margin-left: 70px;
+}
+
+.Wrong {
+    display: block;
+    color: red;
+}
+
+.Right {
+    color: rgb(29, 243, 29);
+}
+
+.Passwords {
+    display: none;
+}
+
+.InfoContainer {
+    position: relative;
+    padding-top: 10px;
+    height: fit-content;
+    width: 600px;
+    border: 4px solid rgb(240, 243, 243);
+    border-radius: 30px;
+    background-color: #112d49;
+}
+
+.Spinner {
+    margin: 25px auto 40px auto;
+    width: 70px;
+}
+.RequestInfoSuccess,
+.RequestInfoFaild {
+    display: block;
+    margin-top: 40px;
+    font-size: 2rem;
+    color: rgb(29, 243, 29);
+}
+
+.RequestInfoFaild {
+    color: red;
+}

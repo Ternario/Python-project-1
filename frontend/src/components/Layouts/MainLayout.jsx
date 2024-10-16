@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Menu from "../Menu";
 
-function MainLayout() {
+import Header from "../Header/Header";
+
+function MainLayout({ isAuthorized, setSignWindow, resetAuthorizedData }) {
     return (
         <>
-            <Menu />
+            <Header isAuthorized={isAuthorized} setSignWindow={setSignWindow} resetAuthorizedData={resetAuthorizedData} />
             <Outlet />
         </>
     );

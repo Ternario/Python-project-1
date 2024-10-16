@@ -1,13 +1,11 @@
 .App {
     text-align: center;
     margin: auto;
-    margin-bottom: 100px;
     width: 900px;
 }
 
 .active {
     color: lightyellow;
-    text-decoration: none;
 }
 
 .courseLink {
@@ -32,6 +30,7 @@ nav {
 
 nav a {
     margin: 15px;
+    text-decoration: none;
 }
 
 h1 {
