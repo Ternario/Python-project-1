@@ -1,0 +1,34 @@
+.SectionFilmContainer {
+    margin: auto;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    width: 900px;
+    border-radius: 10px;
+    background-color: darkslategray;
+}
+
+.SectionTitle {
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.Title {
+    margin: 15px;
+}
+
+.ReleaseYear {
+    margin: 15px;
+}
+.SectionDescription {
+    margin-bottom: 10px;
+}
+
+.TitleDescription {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.Description {
+    font-size: 1.1rem;
+}

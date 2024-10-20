@@ -1,0 +1,109 @@
+.ConnectionButton {
+    padding: 5px;
+    font-size: 1.1rem;
+}
+
+.FormContainer {
+    margin-bottom: 10px;
+}
+
+.TextInput {
+    width: 25%;
+    height: 30px;
+    font-size: 1.3rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.RadioContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 800px;
+    margin: auto;
+}
+
+.Radio {
+    margin: 10px;
+    height: 50px;
+}
+
+.RadioLabel {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    width: 200px;
+    font-size: 1.3rem;
+    border-radius: 10px;
+}
+
+.RadioLabel:hover {
+    cursor: pointer;
+}
+
+.Radio input {
+    margin-right: 10px;
+    height: 30px;
+}
+
+.GenresContainer {
+    width: 400px;
+    display: flex;
+    margin: auto;
+}
+
+.SelectContainer {
+    margin: 10px;
+}
+
+.SelectLabel {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.Select {
+    width: 200px;
+    height: 30px;
+    font-size: 1.2rem;
+}
+
+.Select:hover {
+    cursor: pointer;
+}
+
+.Info {
+    color: red;
+}
+
+.ResultContainer {
+    max-width: 5px auto;
+}
+
+.SectionActorContainer {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    width: 900px;
+    border-radius: 10px;
+    background-color: darkslategray;
+}
+
+.ActorName {
+    margin: 0 10px;
+    padding-top: 10px;
+    font-size: 1.1rem;
+}
+
+.ResultContainer {
+    margin: auto;
+}
+
+.AwaitSpinner {
+    margin: 25px auto 40px auto;
+    width: 70px;
+}

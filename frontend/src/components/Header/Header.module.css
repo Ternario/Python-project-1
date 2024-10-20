@@ -1,0 +1,21 @@
+.UserInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding: 0 15px;
+}
+
+.UserInfoName,
+.UserInfoEmail {
+    margin: auto;
+    width: 70%;
+    font-size: 1.2rem;
+}
+
+.UserInfoName {
+    width: 30%;
+}
+
+.UserEmail {
+    font-weight: bold;
+}
