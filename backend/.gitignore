@@ -1,6 +1,0 @@
-../.idea/
-.vscode/
-.venv/
-app/dbConnectors/.env
-__pycache__/
-*.log
